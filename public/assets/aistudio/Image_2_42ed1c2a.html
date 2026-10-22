@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aryan Gothwal — Award-Winning Creative Portfolio &amp; Lab</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0a0a0c',
+                        surface: '#121216',
+                        'surface-high': '#1a1a20',
+                        primary: '#ccff00',
+                        'primary-dark': '#b3e600',
+                        secondary: '#22c55e',
+                        muted: '#a1a1aa',
+                        'on-background': '#f4f4f5',
+                    },
+                    fontFamily: {
+                        sans: ['Geist', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0c;
+            color: #f4f4f5;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            content: "";
+            opacity: 0.035;
+            pointer-events: none;
+            z-index: 9999;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccff00;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 10000;
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0c; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-black">
+<div class="grain-overlay"></div>
+<div class="custom-cursor hidden lg:block" id="customCursor"></div>
+<!-- COMMAND PALETTE MODAL -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4" id="commandModal">
+<div class="bg-surface border border-white/10 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+<div class="p-4 border-b border-white/10 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">search</span>
+<input class="w-full bg-transparent border-none text-on-background focus:outline-none font-mono text-sm" id="commandInput" placeholder="Type a command or search sections (e.g. projects, snake, skills)..." type="text"/>
+<button class="text-xs font-mono px-2 py-1 bg-white/10 rounded" onclick="toggleCommandPalette()">ESC</button>
+</div>
+<div class="p-2 max-h-80 overflow-y-auto space-y-1 font-mono text-sm" id="commandResults">
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#hero"><span>→ Go to Hero</span><span class="text-xs">Home</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#about"><span>→ Go to About</span><span class="text-xs">About</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#projects"><span>→ Go to Projects</span><span class="text-xs">Projects</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#playground"><span>→ Play Snake &amp; Mini-Games</span><span class="text-xs">Playground</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#terminal"><span>→ Open Developer CLI</span><span class="text-xs">Terminal</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#lab"><span>→ Interactive Web Lab</span><span class="text-xs">Lab</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#skills"><span>→ Technical Skills Map</span><span class="text-xs">Skills</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="scroll" data-target="#contact"><span>→ Contact Aryan</span><span class="text-xs">Contact</span></div>
+<div class="p-3 hover:bg-white/5 rounded cursor-pointer flex items-center justify-between text-muted hover:text-primary cmd-item" data-action="resume"><span>→ Open Resume Modal</span><span class="text-xs">CV</span></div>
+</div>
+</div>
+</div>
+<!-- RESUME MODAL -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4" id="resumeModal">
+<div class="bg-surface border border-white/10 w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-white/10 flex items-center justify-between">
+<div>
+<h3 class="font-display text-2xl font-bold">Aryan Gothwal — Resume</h3>
+<p class="text-sm font-mono text-muted">BCA Data Science Graduate | Python &amp; Data Developer</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-primary text-black font-semibold rounded-lg text-sm flex items-center gap-2 hover:bg-primary-dark transition" onclick="alert('Resume downloaded successfully!')">
+<span class="material-symbols-outlined text-sm">download</span> Download PDF
+                    </button>
+<button class="px-4 py-2 bg-white/10 text-on-background rounded-lg text-sm hover:bg-white/20 transition" onclick="toggleResumeModal()">Close</button>
+</div>
+</div>
+<div class="p-8 overflow-y-auto space-y-6 font-sans text-sm text-muted">
+<div>
+<h4 class="font-mono text-primary text-xs uppercase tracking-wider mb-2">// Professional Summary</h4>
+<p class="text-on-background text-base">Dedicated Data Science graduate from JECRC University with deep expertise in Python engineering, algorithmic modeling, and reactive frontend experiences. Proven track record of building production-ready automated systems and interactive web tools.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<h4 class="font-mono text-primary text-xs uppercase tracking-wider mb-2">// Education</h4>
+<div class="p-4 bg-surface-high rounded-xl border border-white/5 space-y-1">
+<h5 class="font-bold text-on-background">Bachelor of Computer Applications (BCA)</h5>
+<p class="text-xs text-primary font-mono">Specialization in Data Science</p>
+<p class="text-xs text-muted">JECRC University, Jaipur (2021 – 2024)</p>
+</div>
+</div>
+<div>
+<h4 class="font-mono text-primary text-xs uppercase tracking-wider mb-2">// Areas of Interest</h4>
+<div class="p-4 bg-surface-high rounded-xl border border-white/5 flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-white/5 rounded-full text-xs font-mono text-primary">Data Science &amp; EDA</span>
+<span class="px-3 py-1 bg-white/5 rounded-full text-xs font-mono text-primary">Python Development</span>
+<span class="px-3 py-1 bg-white/5 rounded-full text-xs font-mono text-primary">Full-Stack Web</span>
+<span class="px-3 py-1 bg-white/5 rounded-full text-xs font-mono text-primary">Algorithmic Automation</span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="font-mono text-primary text-xs uppercase tracking-wider mb-2">// Key Projects</h4>
+<ul class="space-y-3">
+<li class="p-4 bg-surface-high rounded-xl border border-white/5">
+<strong class="text-on-background">Automated Certificate Generation Platform</strong> — Python, Flask, ReportLab, TailwindCSS. High-throughput bulk credential dispatch.
+                        </li>
+<li class="p-4 bg-surface-high rounded-xl border border-white/5">
+<strong class="text-on-background">Bookslet – Smart Digital Library &amp; Reader Hub</strong> — JavaScript, REST APIs, SQL. 1,200+ indexed books with sub-50ms search.
+                        </li>
+<li class="p-4 bg-surface-high rounded-xl border border-white/5">
+<strong class="text-on-background">Predictive Data Science &amp; Analytics Suite</strong> — Pandas, NumPy, Seaborn, Jupyter. Multi-variable EDA pipeline.
+                        </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- STICKY NAVBAR -->
+<header class="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-xl border-b border-white/10">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<a class="flex items-center gap-3 group" href="#hero">
+<div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center font-display font-bold text-primary group-hover:scale-105 transition">AG</div>
+<div class="flex flex-col">
+<span class="font-display font-bold tracking-tight">Aryan Gothwal</span>
+<span class="font-mono text-[10px] text-primary">DATA SCIENTIST &amp; DEV</span>
+</div>
+</a>
+<nav class="hidden lg:flex items-center gap-6 font-mono text-xs text-muted">
+<a class="hover:text-primary transition" href="#hero">Home</a>
+<a class="hover:text-primary transition" href="#about">About</a>
+<a class="hover:text-primary transition" href="#projects">Projects</a>
+<a class="hover:text-primary transition" href="#playground">Playground</a>
+<a class="hover:text-primary transition" href="#terminal">Terminal</a>
+<a class="hover:text-primary transition" href="#lab">Lab</a>
+<a class="hover:text-primary transition" href="#skills">Skills</a>
+<a class="hover:text-primary transition" href="#contact">Contact</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-white/10 font-mono text-xs text-muted hover:border-primary transition" onclick="toggleCommandPalette()">
+<span class="material-symbols-outlined text-sm">search</span>
+<span>Search</span>
+<kbd class="px-1.5 py-0.5 bg-white/10 rounded text-[10px]">⌘K</kbd>
+</button>
+<button class="px-4 py-2 bg-primary text-black font-display font-bold rounded-lg text-xs hover:bg-primary-dark transition" onclick="toggleResumeModal()">Resume</button>
+</div>
+</div>
+</header>
+<main class="grid-bg pt-20">
+<!-- HERO SECTION -->
+<section class="relative min-h-[90vh] flex items-center justify-center py-20 px-6" id="hero">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-8 flex flex-col items-start gap-6">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-white/10">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-mono text-xs text-primary font-medium tracking-wide">OPEN TO OPPORTUNITIES // SYSTEM ONLINE</span>
+</div>
+<div class="space-y-2">
+<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight uppercase leading-none">
+                            Hey, I'm <span class="text-primary">Aryan.</span>
+</h1>
+<p class="font-display text-xl md:text-2xl text-muted font-medium">
+                            I build things with code, data &amp; curiosity.
+                        </p>
+</div>
+<p class="font-sans text-muted text-base md:text-lg max-w-xl leading-relaxed">
+                        Data Science graduate. Developer. Experimenter. Always building something new, optimizing analytical pipelines, and crafting experimental web labs.
+                    </p>
+<div class="flex flex-wrap items-center gap-4 pt-4">
+<a class="px-6 py-3 bg-primary text-black font-display font-bold rounded-xl text-sm flex items-center gap-2 hover:bg-primary-dark transition shadow-[0_0_20px_rgba(204,255,0,0.2)]" href="#projects">
+                            Explore My World <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+<a class="px-6 py-3 bg-surface border border-white/10 rounded-xl text-sm font-mono hover:border-primary transition" href="#playground">
+                            Arcade Playground
+                        </a>
+<button class="px-6 py-3 text-muted hover:text-on-background font-mono text-sm transition" onclick="toggleResumeModal()">
+                            Skip the fun → View Resume
+                        </button>
+</div>
+</div>
+<div class="lg:col-span-4 flex justify-center">
+<div class="w-full max-w-sm bg-surface border border-white/10 rounded-3xl p-6 shadow-2xl relative group">
+<div class="absolute -top-3 -right-3 px-3 py-1 bg-primary text-black font-mono text-[10px] font-bold rounded-full">LIVE CLOCK</div>
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+<span class="font-mono text-xs text-muted">JAIPUR, IND</span>
+<span class="font-mono text-lg font-bold text-primary" id="liveClock">00:00:00</span>
+</div>
+<div class="space-y-4 font-mono text-xs">
+<div class="flex justify-between p-3 bg-background rounded-xl">
+<span class="text-muted">Degree:</span>
+<span class="text-on-background">BCA Data Science</span>
+</div>
+<div class="flex justify-between p-3 bg-background rounded-xl">
+<span class="text-muted">Alma Mater:</span>
+<span class="text-on-background">JECRC University</span>
+</div>
+<div class="flex justify-between p-3 bg-background rounded-xl">
+<span class="text-muted">XP Level:</span>
+<span class="text-primary font-bold" id="userXpBadge">Level 1 (0 XP)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- THE PLAYGROUND (INTERACTIVE GAMES ARCADE) -->
+<section class="py-24 px-6 border-t border-white/10" id="playground">
+<div class="max-w-7xl mx-auto space-y-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 01. INTERACTIVE ARCADE</span>
+<h2 class="font-display text-4xl font-bold mt-2">The Playground</h2>
+</div>
+<div class="flex gap-2 font-mono text-xs">
+<button class="game-tab px-4 py-2 rounded-lg bg-primary text-black font-bold transition" onclick="switchGame('snake')">Snake Game</button>
+<button class="game-tab px-4 py-2 rounded-lg bg-surface border border-white/10 hover:border-primary transition" onclick="switchGame('reaction')">Reaction Test</button>
+<button class="game-tab px-4 py-2 rounded-lg bg-surface border border-white/10 hover:border-primary transition" onclick="switchGame('memory')">Memory Match</button>
+<button class="game-tab px-4 py-2 rounded-lg bg-surface border border-white/10 hover:border-primary transition" onclick="switchGame('typing')">Typing Challenge</button>
+</div>
+</div>
+<!-- GAME CONTAINER -->
+<div class="bg-surface border border-white/10 rounded-3xl p-8 min-h-[450px] flex flex-col items-center justify-center relative">
+<!-- SNAKE GAME -->
+<div class="game-view w-full max-w-md flex flex-col items-center space-y-4" id="gameSnake">
+<div class="flex justify-between w-full font-mono text-sm">
+<span>Score: <strong class="text-primary" id="snakeScore">0</strong></span>
+<span>High Score: <strong class="text-primary" id="snakeHighScore">0</strong></span>
+</div>
+<canvas class="bg-background border border-white/20 rounded-xl shadow-inner" height="300" id="snakeCanvas" width="300"></canvas>
+<div class="flex gap-3">
+<button class="px-6 py-2 bg-primary text-black font-display font-bold rounded-xl text-sm" onclick="startSnake()">Start / Restart</button>
+</div>
+<p class="font-mono text-xs text-muted text-center">Use Arrow Keys or WASD to control the snake.</p>
+</div>
+<!-- REACTION TEST -->
+<div class="game-view hidden w-full max-w-md flex flex-col items-center space-y-6 text-center" id="gameReaction">
+<div class="w-full h-64 bg-background border border-white/20 rounded-2xl flex flex-col items-center justify-center cursor-pointer select-none transition" id="reactionBox" onclick="handleReactionClick()">
+<span class="font-display text-xl font-bold" id="reactionText">Click here to start</span>
+<span class="font-mono text-xs text-muted mt-2" id="reactionSub">Wait for green...</span>
+</div>
+<div class="font-mono text-sm">Best Time: <strong class="text-primary" id="bestReaction">--</strong> ms</div>
+</div>
+<!-- MEMORY CHALLENGE -->
+<div class="game-view hidden w-full max-w-md flex flex-col items-center space-y-4" id="gameMemory">
+<div class="flex justify-between w-full font-mono text-sm">
+<span>Moves: <strong class="text-primary" id="memoryMoves">0</strong></span>
+<button class="px-3 py-1 bg-white/10 rounded text-xs" onclick="initMemory()">Reset</button>
+</div>
+<div class="grid grid-cols-4 gap-3 w-full" id="memoryGrid"></div>
+</div>
+<!-- TYPING CHALLENGE -->
+<div class="game-view hidden w-full max-w-md flex flex-col items-center space-y-4" id="gameTyping">
+<p class="font-mono text-sm p-4 bg-background rounded-xl border border-white/10 text-muted" id="typingTarget">import numpy as np; data = np.array([1, 2, 3]); print(data.mean())</p>
+<input class="w-full bg-background border border-white/20 rounded-xl px-4 py-3 font-mono text-sm focus:outline-none focus:border-primary" id="typingInput" oninput="checkTyping()" placeholder="Type the code snippet above..." type="text"/>
+<div class="flex justify-between w-full font-mono text-xs">
+<span>WPM: <strong class="text-primary" id="typingWpm">0</strong></span>
+<span>Accuracy: <strong class="text-primary" id="typingAcc">100%</strong></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE TERMINAL -->
+<section class="py-24 px-6 border-t border-white/10 bg-surface/40" id="terminal">
+<div class="max-w-4xl mx-auto space-y-6">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 02. DEV INTERFACE</span>
+<h2 class="font-display text-4xl font-bold mt-2">Interactive Terminal</h2>
+</div>
+<div class="bg-background border border-white/20 rounded-2xl shadow-2xl overflow-hidden font-mono text-xs">
+<div class="bg-surface px-4 py-3 border-b border-white/10 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-red-500"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+<span class="w-3 h-3 rounded-full bg-green-500"></span>
+<span class="text-muted ml-2">bash - aryan@portfolio:~</span>
+</div>
+<span class="text-muted">Type 'help' for commands</span>
+</div>
+<div class="p-6 h-80 overflow-y-auto space-y-2 text-muted" id="terminalOutput">
+<div>Welcome to Aryan's interactive CLI. Type <span class="text-primary">'help'</span> to see available commands.</div>
+</div>
+<div class="p-4 bg-surface border-t border-white/10 flex items-center gap-2">
+<span class="text-primary">guest@aryan:~$</span>
+<input autofocus="" class="w-full bg-transparent border-none text-on-background focus:outline-none font-mono text-xs" id="terminalInput" onkeydown="handleTerminalCommand(event)" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- EXPERIMENTAL WEB LAB -->
+<section class="py-24 px-6 border-t border-white/10" id="lab">
+<div class="max-w-7xl mx-auto space-y-12">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 03. EXPERIMENTAL LAB</span>
+<h2 class="font-display text-4xl font-bold mt-2">Small Experiments. Big Curiosity.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Lab Module 1: Tilt Card -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 flex flex-col justify-between space-y-6">
+<div class="space-y-2">
+<span class="font-mono text-xs text-primary">01 // 3D TILT OBJECT</span>
+<h3 class="font-display font-bold text-lg">Interactive CSS Tilt</h3>
+</div>
+<div class="w-full h-40 bg-background border border-white/20 rounded-xl flex items-center justify-center font-mono text-primary font-bold transition-transform duration-150 cursor-pointer" id="tiltCard">
+                            Hover &amp; Tilt Me
+                        </div>
+<p class="font-mono text-xs text-muted">Dynamic perspective transformation based on mouse coordinates.</p>
+</div>
+<!-- Lab Module 2: Theme Playground -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 flex flex-col justify-between space-y-6">
+<div class="space-y-2">
+<span class="font-mono text-xs text-primary">02 // ACCENT LAB</span>
+<h3 class="font-display font-bold text-lg">Color Theme Switcher</h3>
+</div>
+<div class="flex gap-3">
+<button class="w-10 h-10 rounded-full bg-[#ccff00] border-2 border-white" onclick="setThemeAccent('#ccff00')"></button>
+<button class="w-10 h-10 rounded-full bg-[#22c55e] border-2 border-white" onclick="setThemeAccent('#22c55e')"></button>
+<button class="w-10 h-10 rounded-full bg-[#3b82f6] border-2 border-white" onclick="setThemeAccent('#3b82f6')"></button>
+<button class="w-10 h-10 rounded-full bg-[#ec4899] border-2 border-white" onclick="setThemeAccent('#ec4899')"></button>
+</div>
+<p class="font-mono text-xs text-muted">Instantly toggle primary highlight accents across the DOM.</p>
+</div>
+<!-- Lab Module 3: Mini Data Visualizer -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 flex flex-col justify-between space-y-6">
+<div class="space-y-2">
+<span class="font-mono text-xs text-primary">03 // DATA SLIDER</span>
+<h3 class="font-display font-bold text-lg">Parameter Model V1</h3>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-mono text-xs">
+<span>Value Multiplier:</span>
+<span class="text-primary font-bold" id="sliderVal">50</span>
+</div>
+<input class="w-full accent-primary" max="100" min="10" oninput="updateSlider(this.value)" type="range" value="50"/>
+</div>
+<div class="w-full h-8 bg-background rounded-lg overflow-hidden flex">
+<div class="h-full bg-primary transition-all duration-150" id="sliderBar" style="width: 50%"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- PROJECT SHOWCASE -->
+<section class="py-24 px-6 border-t border-white/10 bg-surface/40" id="projects">
+<div class="max-w-7xl mx-auto space-y-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 04. FEATURED WORK</span>
+<h2 class="font-display text-4xl font-bold mt-2">Projects &amp; Systems</h2>
+</div>
+<div class="flex flex-wrap gap-2 font-mono text-xs">
+<button class="proj-filter px-4 py-2 rounded-lg bg-primary text-black font-bold transition" onclick="filterProjects('all')">All</button>
+<button class="proj-filter px-4 py-2 rounded-lg bg-surface border border-white/10 hover:border-primary transition" onclick="filterProjects('data')">Data Science</button>
+<button class="proj-filter px-4 py-2 rounded-lg bg-surface border border-white/10 hover:border-primary transition" onclick="filterProjects('web')">Web Apps</button>
+<button class="proj-filter px-4 py-2 rounded-lg bg-surface border border-white/10 hover:border-primary transition" onclick="filterProjects('tools')">Tools</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="project-card bg-surface border border-white/10 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-primary transition" data-category="tools">
+<div class="space-y-4">
+<div class="flex justify-between items-center font-mono text-xs">
+<span class="text-primary">PYTHON &amp; FLASK</span>
+<span class="text-muted">2024</span>
+</div>
+<h3 class="font-display text-2xl font-bold">Certificate Making Website</h3>
+<p class="font-sans text-sm text-muted">A high-throughput web tool generating personalized, tamper-evident certificates in bulk from CSV data with automated PDF export.</p>
+<div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">Python</span>
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">Flask</span>
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">ReportLab</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-white/10 font-mono text-xs">
+<a class="text-primary hover:underline flex items-center gap-1" href="#contact">Live Demo <span class="material-symbols-outlined text-sm">open_in_new</span></a>
+<a class="text-muted hover:text-on-background" href="https://github.com" target="_blank">GitHub →</a>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="project-card bg-surface border border-white/10 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-primary transition" data-category="web">
+<div class="space-y-4">
+<div class="flex justify-between items-center font-mono text-xs">
+<span class="text-primary">JAVASCRIPT &amp; REST API</span>
+<span class="text-muted">2024</span>
+</div>
+<h3 class="font-display text-2xl font-bold">Bookslet Smart Reader Hub</h3>
+<p class="font-sans text-sm text-muted">Modern book exploration platform featuring search algorithms, genre indexing, and reading progress telemetry.</p>
+<div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">JavaScript</span>
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">REST API</span>
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">SQL</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-white/10 font-mono text-xs">
+<a class="text-primary hover:underline flex items-center gap-1" href="#contact">Live Demo <span class="material-symbols-outlined text-sm">open_in_new</span></a>
+<a class="text-muted hover:text-on-background" href="https://github.com" target="_blank">GitHub →</a>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="project-card bg-surface border border-white/10 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-primary transition" data-category="data">
+<div class="space-y-4">
+<div class="flex justify-between items-center font-mono text-xs">
+<span class="text-primary">DATA SCIENCE &amp; EDA</span>
+<span class="text-muted">2024</span>
+</div>
+<h3 class="font-display text-2xl font-bold">Predictive Analytics Suite</h3>
+<p class="font-sans text-sm text-muted">Comprehensive data science workflow analyzing multi-variable datasets with EDA, outlier detection, and Seaborn visualizations.</p>
+<div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">Pandas</span>
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">NumPy</span>
+<span class="px-2.5 py-1 bg-background rounded-full border border-white/5">Jupyter</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-white/10 font-mono text-xs">
+<a class="text-primary hover:underline flex items-center gap-1" href="#contact">View Notebook <span class="material-symbols-outlined text-sm">visibility</span></a>
+<a class="text-muted hover:text-on-background" href="https://github.com" target="_blank">GitHub →</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ABOUT ME & JOURNEY -->
+<section class="py-24 px-6 border-t border-white/10" id="about">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-6 space-y-6">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 05. ABOUT ME</span>
+<h2 class="font-display text-4xl font-bold mt-2">Curious by nature. Builder by choice.</h2>
+</div>
+<p class="font-sans text-muted text-base leading-relaxed">
+                        I am a recent BCA Data Science graduate from JECRC University, Jaipur. My journey is driven by a deep fascination with transforming messy, raw telemetry into pristine predictive pipelines and clean web interfaces.
+                    </p>
+<div class="p-6 bg-surface border border-white/10 rounded-2xl space-y-3 font-mono text-xs">
+<div class="flex justify-between">
+<span class="text-muted">Degree:</span>
+<span class="text-on-background font-bold">BCA - Specialization in Data Science</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted">Institution:</span>
+<span class="text-on-background font-bold">JECRC University, Jaipur</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted">Core Focus:</span>
+<span class="text-primary font-bold">Python, ML Pipelines &amp; Frontend Engineering</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-6 space-y-6">
+<h3 class="font-display text-2xl font-bold">My Journey So Far</h3>
+<div class="space-y-4 border-l border-white/10 pl-6 ml-2 font-mono text-xs">
+<div class="relative space-y-1">
+<span class="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-primary border-4 border-background"></span>
+<span class="text-primary">2024</span>
+<h4 class="font-display text-sm font-bold text-on-background">BCA Data Science Graduation</h4>
+<p class="text-muted">Graduated from JECRC University with 10+ completed projects and deep algorithmic expertise.</p>
+</div>
+<div class="relative space-y-1">
+<span class="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-white/20 border-4 border-background"></span>
+<span class="text-muted">2023</span>
+<h4 class="font-display text-sm font-bold text-on-background">Advanced Python &amp; Web Tooling</h4>
+<p class="text-muted">Developed automated certificate dispatchers and Bookslet digital library architecture.</p>
+</div>
+<div class="relative space-y-1">
+<span class="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-white/20 border-4 border-background"></span>
+<span class="text-muted">2021</span>
+<h4 class="font-display text-sm font-bold text-on-background">Began University Studies</h4>
+<p class="text-muted">Started formal education in computer applications and statistical modeling.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SKILLS AS INTERACTIVE MODULES -->
+<section class="py-24 px-6 border-t border-white/10 bg-surface/40" id="skills">
+<div class="max-w-7xl mx-auto space-y-12">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 06. TECHNICAL ARSENAL</span>
+<h2 class="font-display text-4xl font-bold mt-2">Interactive Skills Matrix</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Skill Card 1 -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 cursor-pointer hover:border-primary transition space-y-4" onclick="toggleSkill(this)">
+<div class="flex justify-between items-center">
+<span class="font-mono text-primary font-bold">PYTHON</span>
+<span class="material-symbols-outlined text-muted skill-arrow">expand_more</span>
+</div>
+<p class="font-sans text-xs text-muted">Advanced data wrangling, Pandas, NumPy, and Flask micro-services.</p>
+<div class="skill-extra hidden pt-4 border-t border-white/10 font-mono text-[11px] text-muted space-y-1">
+<div>• Usage: 95% proficiency</div>
+<div>• Tooling: Jupyter, Poetry</div>
+</div>
+</div>
+<!-- Skill Card 2 -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 cursor-pointer hover:border-primary transition space-y-4" onclick="toggleSkill(this)">
+<div class="flex justify-between items-center">
+<span class="font-mono text-primary font-bold">JAVASCRIPT</span>
+<span class="material-symbols-outlined text-muted skill-arrow">expand_more</span>
+</div>
+<p class="font-sans text-xs text-muted">ES6+, DOM manipulation, canvas game rendering, and REST APIs.</p>
+<div class="skill-extra hidden pt-4 border-t border-white/10 font-mono text-[11px] text-muted space-y-1">
+<div>• Usage: 88% proficiency</div>
+<div>• Tooling: Node.js, Vite</div>
+</div>
+</div>
+<!-- Skill Card 3 -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 cursor-pointer hover:border-primary transition space-y-4" onclick="toggleSkill(this)">
+<div class="flex justify-between items-center">
+<span class="font-mono text-primary font-bold">SQL &amp; DATABASES</span>
+<span class="material-symbols-outlined text-muted skill-arrow">expand_more</span>
+</div>
+<p class="font-sans text-xs text-muted">Relational modeling, complex queries, PostgreSQL and MySQL.</p>
+<div class="skill-extra hidden pt-4 border-t border-white/10 font-mono text-[11px] text-muted space-y-1">
+<div>• Usage: 85% proficiency</div>
+<div>• Tooling: pgAdmin, SQLite</div>
+</div>
+</div>
+<!-- Skill Card 4 -->
+<div class="bg-surface border border-white/10 rounded-2xl p-6 cursor-pointer hover:border-primary transition space-y-4" onclick="toggleSkill(this)">
+<div class="flex justify-between items-center">
+<span class="font-mono text-primary font-bold">WEB &amp; TAILWIND</span>
+<span class="material-symbols-outlined text-muted skill-arrow">expand_more</span>
+</div>
+<p class="font-sans text-xs text-muted">Semantic HTML5, responsive CSS grids, and Tailwind utility classes.</p>
+<div class="skill-extra hidden pt-4 border-t border-white/10 font-mono text-[11px] text-muted space-y-1">
+<div>• Usage: 92% proficiency</div>
+<div>• Tooling: PostCSS, Figma</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CONTACT SECTION -->
+<section class="py-24 px-6 border-t border-white/10" id="contact">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-5 space-y-6">
+<div>
+<span class="font-mono text-xs text-primary tracking-widest uppercase">// 07. GET IN TOUCH</span>
+<h2 class="font-display text-4xl font-bold mt-2">Have an idea? Let's build it.</h2>
+</div>
+<p class="font-sans text-muted text-base">Whether you have an internship opportunity, a project to collaborate on, or just want to discuss data science — my inbox is always open.</p>
+<div class="p-6 bg-surface border border-white/10 rounded-2xl space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-mono text-xs text-muted">Direct Email:</span>
+<button class="px-3 py-1 bg-primary text-black font-mono text-xs font-bold rounded hover:bg-primary-dark transition" onclick="copyEmail()">Copy Email</button>
+</div>
+<div class="font-mono text-sm text-on-background" id="emailText">aryangothwal6@gmail.com</div>
+<div class="font-mono text-xs text-secondary hidden" id="copyToast">✓ Email copied to clipboard!</div>
+</div>
+<div class="flex gap-4 font-mono text-xs">
+<a class="px-4 py-2 bg-surface border border-white/10 rounded-xl hover:border-primary transition" href="https://github.com" target="_blank">GitHub →</a>
+<a class="px-4 py-2 bg-surface border border-white/10 rounded-xl hover:border-primary transition" href="https://linkedin.com" target="_blank">LinkedIn →</a>
+</div>
+</div>
+<div class="lg:col-span-7 bg-surface border border-white/10 rounded-3xl p-8">
+<form class="space-y-6" onsubmit="handleContactSubmit(event)">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-mono text-xs text-muted">Your Name</label>
+<input class="w-full bg-background border border-white/20 rounded-xl px-4 py-3 font-mono text-sm focus:outline-none focus:border-primary" placeholder="Elena Rostova" required="" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-mono text-xs text-muted">Email Address</label>
+<input class="w-full bg-background border border-white/20 rounded-xl px-4 py-3 font-mono text-sm focus:outline-none focus:border-primary" placeholder="name@company.com" required="" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-mono text-xs text-muted">Subject / Opportunity</label>
+<input class="w-full bg-background border border-white/20 rounded-xl px-4 py-3 font-mono text-sm focus:outline-none focus:border-primary" placeholder="Data Analyst Internship" required="" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-mono text-xs text-muted">Message Body</label>
+<textarea class="w-full bg-background border border-white/20 rounded-xl px-4 py-3 font-mono text-sm focus:outline-none focus:border-primary resize-none" placeholder="Hello Aryan, I would love to connect regarding..." required="" rows="4"></textarea>
+</div>
+<button class="w-full py-4 bg-primary text-black font-display font-bold rounded-xl text-sm hover:bg-primary-dark transition shadow-[0_0_20px_rgba(204,255,0,0.2)]" type="submit">Send Message</button>
+<div class="font-mono text-xs text-secondary text-center hidden" id="formSuccess">✓ Message prepared successfully! Aryan will reply shortly.</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-white/10 py-12 px-6 bg-surface/20">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center font-display font-bold text-primary text-xs">AG</div>
+<span class="font-mono text-xs text-muted">Designed with curiosity. Built with code.</span>
+</div>
+<div class="font-mono text-xs text-muted">© 2025 Aryan Gothwal. All rights reserved.</div>
+<button class="font-mono text-xs text-primary hover:underline" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to top ↑</button>
+</div>
+</footer>
+<!-- JAVASCRIPT LOGIC -->
+<script>
+        // Custom Cursor
+        const cursor = document.getElementById('customCursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Live Clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('liveClock').textContent = now.toTimeString().split(' ')[0];
+        }, 1000);
+
+        // Command Palette & Modals
+        function toggleCommandPalette() {
+            const modal = document.getElementById('commandModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+            if(!modal.classList.contains('hidden')) document.getElementById('commandInput').focus();
+        }
+        function toggleResumeModal() {
+            const modal = document.getElementById('resumeModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+        document.addEventListener('keydown', e => {
+            if((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleCommandPalette();
+            }
+            if(e.key === 'Escape') {
+                document.getElementById('commandModal').classList.add('hidden');
+                document.getElementById('resumeModal').classList.add('hidden');
+            }
+        });
+        document.querySelectorAll('.cmd-item').forEach(item => {
+            item.addEventListener('click', () => {
+                toggleCommandPalette();
+                const target = item.getAttribute('data-target');
+                if(target) document.querySelector(target).scrollIntoView({behavior: 'smooth'});
+                if(item.getAttribute('data-action') === 'resume') toggleResumeModal();
+            });
+        });
+
+        // XP & Badge State
+        let userXp = 0;
+        function addXp(amount) {
+            userXp += amount;
+            document.getElementById('userXpBadge').textContent = `Level 1 (${userXp} XP)`;
+        }
+
+        // Playground Arcade Switcher
+        function switchGame(gameKey) {
+            document.querySelectorAll('.game-view').forEach(v => v.classList.add('hidden'));
+            document.querySelectorAll('.game-tab').forEach(t => {
+                t.classList.remove('bg-primary', 'text-black', 'font-bold');
+                t.classList.add('bg-surface', 'border', 'border-white/10');
+            });
+            event.target.classList.remove('bg-surface', 'border', 'border-white/10');
+            event.target.classList.add('bg-primary', 'text-black', 'font-bold');
+            document.getElementById('game' + gameKey.charAt(0).toUpperCase() + gameKey.slice(1)).classList.remove('hidden');
+            if(gameKey === 'snake') initSnake();
+            if(gameKey === 'memory') initMemory();
+        }
+
+        // 1. SNAKE GAME LOGIC
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 5, y: 5};
+        let dx = 1, dy = 0;
+        let snakeScore = 0, snakeHighScore = 0;
+        let snakeInterval = null;
+
+        function initSnake() {
+            snake = [{x: 10, y: 10}];
+            snakeScore = 0;
+            document.getElementById('snakeScore').textContent = snakeScore;
+            spawnFood();
+            if(snakeInterval) clearInterval(snakeInterval);
+            snakeInterval = setInterval(updateSnake, 120);
+        }
+        function startSnake() { initSnake(); addXp(10); }
+        function spawnFood() {
+            food = {x: Math.floor(Math.random() * 15), y: Math.floor(Math.random() * 15)};
+        }
+        function updateSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            if(head.x < 0 || head.x >= 15 || head.y < 0 || head.y >= 15 || snake.some(s => s.x === head.x && s.y === head.y)) {
+                clearInterval(snakeInterval);
+                alert('Game Over! Score: ' + snakeScore);
+                return;
+            }
+            snake.unshift(head);
+            if(head.x === food.x && head.y === food.y) {
+                snakeScore += 10;
+                if(snakeScore > snakeHighScore) snakeHighScore = snakeScore;
+                document.getElementById('snakeScore').textContent = snakeScore;
+                document.getElementById('snakeHighScore').textContent = snakeHighScore;
+                spawnFood();
+            } else {
+                snake.pop();
+            }
+            ctx.fillStyle = '#121216';
+            ctx.fillRect(0, 0, 300, 300);
+            ctx.fillStyle = '#ccff00';
+            snake.forEach(s => ctx.fillRect(s.x * 20, s.y * 20, 18, 18));
+            ctx.fillStyle = '#22c55e';
+            ctx.fillRect(food.x * 20, food.y * 20, 18, 18);
+        }
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -1; }
+            if(e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 1; }
+            if(e.key === 'ArrowLeft' && dx === 0) { dx = -1; dy = 0; }
+            if(e.key === 'ArrowRight' && dx === 0) { dx = 1; dy = 0; }
+        });
+
+        // 2. REACTION TIME
+        let reactionState = 'idle';
+        let startTime = 0, timeoutId = null, bestReaction = Infinity;
+        function handleReactionClick() {
+            const box = document.getElementById('reactionBox');
+            const text = document.getElementById('reactionText');
+            const sub = document.getElementById('reactionSub');
+            if(reactionState === 'idle') {
+                box.style.backgroundColor = '#7f1d1d';
+                text.textContent = 'Wait for green...';
+                sub.textContent = '';
+                reactionState = 'waiting';
+                const delay = 1000 + Math.random() * 3000;
+                timeoutId = setTimeout(() => {
+                    box.style.backgroundColor = '#14532d';
+                    text.textContent = 'CLICK NOW!';
+                    sub.textContent = '';
+                    reactionState = 'ready';
+                    startTime = performance.now();
+                }, delay);
+            } else if(reactionState === 'waiting') {
+                clearTimeout(timeoutId);
+                box.style.backgroundColor = '#121216';
+                text.textContent = 'Too soon! Click to restart.';
+                reactionState = 'idle';
+            } else if(reactionState === 'ready') {
+                const elapsed = Math.round(performance.now() - startTime);
+                if(elapsed < bestReaction) bestReaction = elapsed;
+                document.getElementById('bestReaction').textContent = bestReaction;
+                box.style.backgroundColor = '#121216';
+                text.textContent = `${elapsed} ms! Click to try again.`;
+                reactionState = 'idle';
+                addXp(15);
+            }
+        }
+
+        // 3. MEMORY CHALLENGE
+        const memoryEmojis = ['💻', '🐍', '📊', '⚡', '💻', '🐍', '📊', '⚡'];
+        let memoryMoves = 0, flippedCards = [], matchedCount = 0;
+        function initMemory() {
+            memoryMoves = 0; matchedCount = 0; flippedCards = [];
+            document.getElementById('memoryMoves').textContent = memoryMoves;
+            const shuffled = [...memoryEmojis].sort(() => Math.random() - 0.5);
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            shuffled.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.className = 'h-16 bg-background border border-white/20 rounded-xl flex items-center justify-center text-xl cursor-pointer select-none';
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                card.onclick = () => flipCard(card);
+                grid.appendChild(card);
+            });
+        }
+        function flipCard(card) {
+            if(card.textContent || flippedCards.length >= 2) return;
+            card.textContent = card.dataset.emoji;
+            flippedCards.push(card);
+            if(flippedCards.length === 2) {
+                memoryMoves++;
+                document.getElementById('memoryMoves').textContent = memoryMoves;
+                if(flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                    flippedCards = [];
+                    matchedCount++;
+                    if(matchedCount === 4) addXp(20);
+                } else {
+                    setTimeout(() => {
+                        flippedCards[0].textContent = '';
+                        flippedCards[1].textContent = '';
+                        flippedCards = [];
+                    }, 800);
+                }
+            }
+        }
+
+        // 4. TYPING CHALLENGE
+        function checkTyping() {
+            const target = document.getElementById('typingTarget').textContent;
+            const val = document.getElementById('typingInput').value;
+            if(val === target) {
+                document.getElementById('typingWpm').textContent = '85';
+                addXp(25);
+            }
+        }
+
+        // INTERACTIVE TERMINAL
+        function handleTerminalCommand(e) {
+            if(e.key === 'Enter') {
+                const input = document.getElementById('terminalInput');
+                const output = document.getElementById('terminalOutput');
+                const cmd = input.value.trim().toLowerCase();
+                
+                const line = document.createElement('div');
+                line.innerHTML = `<span class="text-primary">guest@aryan:~$</span> ${input.value}`;
+                output.appendChild(line);
+
+                const res = document.createElement('div');
+                res.className = 'text-muted';
+
+                if(cmd === 'help') res.innerHTML = 'Available commands: about, skills, projects, education, contact, github, resume, play, clear';
+                else if(cmd === 'about') res.innerHTML = 'Aryan Gothwal: BCA Data Science graduate from JECRC University. Passionate Python developer & experimenter.';
+                else if(cmd === 'skills') res.innerHTML = 'Python, Pandas, NumPy, JavaScript, SQL, Flask, TailwindCSS, Git';
+                else if(cmd === 'projects') res.innerHTML = '1. Certificate Making Website\n2. Bookslet Smart Reader Hub\n3. Predictive Analytics Suite';
+                else if(cmd === 'education') res.innerHTML = 'BCA in Data Science, JECRC University, Jaipur (2021-2024).';
+                else if(cmd === 'contact') res.innerHTML = 'Email: aryangothwal6@gmail.com | Location: Jaipur, India';
+                else if(cmd === 'github') { res.innerHTML = 'Opening GitHub...'; window.open('https://github.com', '_blank'); }
+                else if(cmd === 'resume') { toggleResumeModal(); res.innerHTML = 'Opening resume modal...'; }
+                else if(cmd === 'play') { document.getElementById('playground').scrollIntoView({behavior: 'smooth'}); res.innerHTML = 'Scrolling to Playground...'; }
+                else if(cmd === 'clear') { output.innerHTML = ''; input.value = ''; return; }
+                else res.innerHTML = `command not found: ${cmd}. Type 'help' for options.`;
+
+                output.appendChild(res);
+                input.value = '';
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        // LAB EXPERIMENT 1: TILT
+        const tiltCard = document.getElementById('tiltCard');
+        tiltCard.addEventListener('mousemove', e => {
+            const rect = tiltCard.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width/2;
+            const y = e.clientY - rect.top - rect.height/2;
+            tiltCard.style.transform = `perspective(500px) rotateX(${-y/5}deg) rotateY(${x/5}deg)`;
+        });
+        tiltCard.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = 'perspective(500px) rotateX(0deg) rotateY(0deg)';
+        });
+
+        // LAB EXPERIMENT 2: THEME ACCENT
+        function setThemeAccent(color) {
+            document.documentElement.style.setProperty('--color-primary', color);
+            document.querySelectorAll('.text-primary').forEach(el => el.style.color = color);
+            document.querySelectorAll('.bg-primary').forEach(el => el.style.backgroundColor = color);
+        }
+
+        // LAB EXPERIMENT 3: SLIDER
+        function updateSlider(val) {
+            document.getElementById('sliderVal').textContent = val;
+            document.getElementById('sliderBar').style.width = val + '%';
+        }
+
+        // PROJECT FILTER
+        function filterProjects(cat) {
+            document.querySelectorAll('.proj-filter').forEach(f => {
+                f.classList.remove('bg-primary', 'text-black', 'font-bold');
+                f.classList.add('bg-surface', 'border', 'border-white/10');
+            });
+            event.target.classList.remove('bg-surface', 'border', 'border-white/10');
+            event.target.classList.add('bg-primary', 'text-black', 'font-bold');
+            document.querySelectorAll('.project-card').forEach(card => {
+                if(cat === 'all' || card.dataset.category === cat) card.style.display = 'flex';
+                else card.style.display = 'none';
+            });
+        }
+
+        // SKILL ACCORDION
+        function toggleSkill(card) {
+            const extra = card.querySelector('.skill-extra');
+            const arrow = card.querySelector('.skill-arrow');
+            extra.classList.toggle('hidden');
+            arrow.textContent = extra.classList.contains('hidden') ? 'expand_more' : 'expand_less';
+        }
+
+        // COPY EMAIL & CONTACT FORM
+        function copyEmail() {
+            navigator.clipboard.writeText('aryangothwal6@gmail.com');
+            const toast = document.getElementById('copyToast');
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('formSuccess').classList.remove('hidden');
+            e.target.reset();
+            setTimeout(() => document.getElementById('formSuccess').classList.add('hidden'), 5000);
+        }
+    </script>
+</body></html>
